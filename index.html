@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06070d">
+<title>Paulo Victor Carneiro Tavares · Back-End Developer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{--ink:#0a0c14;--paper:#f5f6fa;--blue:#3d7bff;--hot:#ff4a1c;--bg:#06070d;--text:#eef1ff;--mist:#9aa3c7;
+--sans:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html:not(.in),html:not(.in) body{overflow:hidden;height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5}
+a{color:inherit}:focus-visible{outline:2px solid var(--hot);outline-offset:3px}
+.hd{font-weight:800;font-stretch:75%;letter-spacing:-.02em;line-height:.92}
+
+/* ===== fachada: a loja CSTECH 16 ===== */
+#facade{position:fixed;inset:0;z-index:10;color:var(--ink);overflow:hidden}
+#facade[hidden]{display:none}
+.layer{position:absolute;inset:0;transform-origin:50% 55%;transition:transform 1.7s cubic-bezier(.7,0,.2,1),opacity 1s ease .55s}
+.l1{background:var(--paper) linear-gradient(#0a0c1410 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,#0a0c1410 1px,transparent 1px) 0 0/40px 40px}
+.l2{padding:calc(env(safe-area-inset-top,0px) + 14px) clamp(14px,4vw,48px) 90px;display:flex;flex-direction:column;gap:14px}
+.l3{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:18px clamp(14px,4vw,48px) calc(env(safe-area-inset-bottom,0px) + 18px);pointer-events:none}
+.l3>*{pointer-events:auto}
+.diving .l1{transform:scale(7);opacity:0}.diving .l2{transform:scale(12);opacity:0}.diving .l3{transform:scale(20);opacity:0}
+.top{display:flex;align-items:center;gap:12px;border-bottom:1px solid #0a0c1422;padding-bottom:12px;font-weight:600}
+.logo{background:var(--ink);color:var(--blue);font:800 1.1rem var(--sans);padding:6px 9px;border-radius:4px}
+.srch{flex:1;height:36px;border:1px solid #0a0c1433;background:#fff;border-radius:4px}
+.top span{white-space:nowrap}.hide-s{display:none}@media(min-width:600px){.hide-s{display:inline}}
+#cart{background:var(--blue);color:#fff;padding:7px 12px;border-radius:4px}
+.ban{position:relative;overflow:hidden;height:clamp(170px,32vh,340px);border-radius:6px}
+.trk{display:flex;height:100%;transition:transform .55s cubic-bezier(.7,0,.2,1)}
+.sl{flex:0 0 100%;position:relative;overflow:hidden;padding:clamp(16px,3vw,36px) clamp(16px,3vw,36px) 52px;display:flex;flex-direction:column;justify-content:flex-end}
+.sl:nth-child(1){background:radial-gradient(circle at 75% 40%,#6c9cff,var(--blue) 62%);color:#fff}
+.sl:nth-child(2){background:radial-gradient(circle at 75% 40%,#22336a,var(--ink) 66%);color:#fff}
+.sl:nth-child(3){background:radial-gradient(circle at 75% 40%,#fff,#d6e2ff 72%);color:var(--ink)}
+.t{position:relative;z-index:1;font-size:clamp(2rem,8vw,5rem);max-width:70%}
+.art{position:absolute;right:3%;top:7%;height:56%;width:auto;animation:fl 3.2s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-10px) rotate(-2deg)}}
+.ln rect{fill:#9fe0ff;transform-box:fill-box;transform-origin:left;animation:ln 1.4s ease-in-out infinite alternate}
+.ln rect:nth-child(2){animation-delay:.3s}.ln rect:nth-child(3){animation-delay:.6s}.ln rect:nth-child(4){animation-delay:.9s}
+@keyframes ln{from{transform:scaleX(.2)}}
+.eq{position:absolute;left:5%;top:12%;height:30%;display:flex;align-items:flex-end;gap:5px}
+.eq i{width:7px;height:100%;background:var(--blue);transform-origin:bottom;animation:eq .7s ease-in-out infinite alternate}
+.eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}.eq i:nth-child(4){animation-delay:.1s}.eq i:nth-child(5){animation-delay:.25s}
+@keyframes eq{from{transform:scaleY(.12)}}
+.sw{animation:sw 1.6s linear infinite}
+@keyframes sw{from{transform:translateX(-50px)}to{transform:translateX(210px)}}
+.vid{position:absolute;left:10px;right:10px;bottom:10px;z-index:2;display:flex;align-items:center;gap:10px;background:#0a0c14d9;color:#fff;border-radius:99px;padding:6px 14px;font:500 .72rem var(--mono)}
+.vid::before{content:"";border-left:9px solid #fff;border-block:6px solid #0000}
+.vid div{flex:1;height:4px;background:#fff3;border-radius:4px;overflow:hidden}.vid div i{display:block;height:100%;background:var(--hot);animation:pg 3.3s linear infinite}
+@keyframes pg{from{width:0}}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:760px){.tiles{grid-template-columns:repeat(4,1fr)}}
+.tile{background:#fff;border:1px solid #0a0c1422;border-radius:6px;padding:10px;animation:up .5s both}
+.tile:nth-child(2){animation-delay:.15s}.tile:nth-child(3){animation-delay:.3s}.tile:nth-child(4){animation-delay:.45s}
+.pic{display:grid;place-items:center;height:clamp(54px,10vh,96px);border-radius:4px;background:linear-gradient(135deg,#e8edff,#c9d9ff);color:var(--ink)}
+.pic svg{height:78%;width:auto;aspect-ratio:64/48}
+.tile b{display:block;margin-top:8px;font-size:.9rem}.stars{display:block;color:#f5a400;font-size:.8rem}
+.buy{display:inline-block;margin-top:6px;background:var(--ink);color:#fff;padding:5px 12px;border-radius:4px;font-size:.8rem;font-weight:600}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+#err{display:none;position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);z-index:3;background:var(--hot);color:#fff;padding:16px 28px;text-align:center;font:500 1rem var(--mono);animation:slam .35s cubic-bezier(.2,2,.4,1) both}
+#err b{display:block;font:800 clamp(3rem,16vw,6rem)/.9 var(--sans);font-stretch:75%}
+@keyframes slam{from{transform:translate(-50%,-50%) scale(4);opacity:0}}
+.scan{display:none;position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(#0000 0 3px,#0006 3px 4px);mix-blend-mode:multiply}
+.scan::before,.scan::after{content:"";position:absolute;left:0;right:0;height:14%;background:var(--blue);mix-blend-mode:difference;animation:tear .22s steps(1) infinite}
+.scan::after{height:7%;background:var(--hot);animation-duration:.31s}
+@keyframes tear{0%{top:8%;transform:translateX(-6%)}25%{top:62%;transform:translateX(8%)}50%{top:30%;transform:translateX(-10%)}75%{top:80%;transform:translateX(5%)}}
+.glitch .scan{display:block}.glitch #err{display:block}
+.glitch .l2,.glitch .l1{animation:gl .9s steps(1) 1}
+@keyframes gl{0%{transform:translate(-9px,3px) skewX(4deg);filter:drop-shadow(6px 0 0 #f0f) drop-shadow(-6px 0 0 #0ff)}15%{transform:translate(10px,-5px) skewX(-7deg);opacity:.6}30%{transform:translate(-4px,6px);opacity:1;filter:invert(1)}45%{transform:translate(7px,0) skewX(5deg);filter:hue-rotate(90deg)}60%{transform:translate(-12px,-3px);filter:drop-shadow(-8px 0 0 #f0f)}80%{transform:translate(5px,4px) skewX(-3deg);opacity:.5}100%{transform:none}}
+.load{flex:1;max-width:420px;font:500 .85rem var(--mono)}
+.bar{height:6px;background:#0a0c1422;margin-top:8px;overflow:hidden}#fill{height:100%;width:0;background:var(--ink)}
+.skip{font:500 .85rem var(--mono);background:none;border:1px solid var(--ink);color:var(--ink);padding:8px 14px;cursor:pointer}
+#tun{position:fixed;inset:-30%;z-index:9;pointer-events:none;opacity:0;background:repeating-conic-gradient(from 0deg,var(--blue) 0 .7deg,#0000 .7deg 7deg);-webkit-mask:radial-gradient(circle,#0000 12%,#000 75%);mask:radial-gradient(circle,#0000 12%,#000 75%)}
+#tun.go{animation:tun 1.9s cubic-bezier(.5,0,.3,1) both}
+@keyframes tun{0%{opacity:0;transform:scale(.2) rotate(0)}30%{opacity:.85}100%{opacity:0;transform:scale(2.6) rotate(50deg)}}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity .5s}
+#rain.on{opacity:1}
+
+/* ===== lado de dentro ===== */
+#inside{position:relative;opacity:0;transform:scale(.75);transition:opacity 1.2s ease .5s,transform 1.9s cubic-bezier(.2,.8,.2,1);z-index:1}
+#inside.show{opacity:1 !important;transform:none !important;visibility:visible !important}
+#inside.instant{transition:none}
+html.in,html.in body{overflow:auto !important;height:auto !important;min-height:100%}
+body{min-height:100vh !important}
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#glow{position:fixed;left:0;top:0;width:480px;height:480px;margin:-240px 0 0 -240px;z-index:0;pointer-events:none;background:radial-gradient(circle,#3d7bff30,#0000 65%);display:none}
+@media(pointer:fine){#glow{display:block}}
+#depth{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 12px);right:12px;font:500 .8rem var(--mono);background:#06070dd0;border:1px solid #3d7bff55;padding:8px 12px;color:var(--mist);backdrop-filter:blur(6px)}
+#depth b{color:var(--hot);font-weight:500}
+main{position:relative;z-index:1;max-width:900px;padding:0 clamp(18px,6vw,72px)}
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:90px 0}
+h2.big{font-size:clamp(3rem,13vw,7.5rem);margin:0 0 20px}
+.sub{font-size:1.15rem;color:var(--mist);max-width:42ch;margin:0 0 26px}
+.logh{font:400 .82rem/1.7 var(--mono);color:var(--mist);border-left:2px solid var(--hot);padding-left:14px;min-height:12.5em}
+.logh small{display:block;color:#5d6690;margin-bottom:6px}.logh i{font-style:normal;color:var(--blue)}.logh em{font-style:normal;color:var(--hot)}
+.band{overflow:hidden;transform:rotate(-2.5deg) scale(1.08);background:var(--blue);color:var(--bg);margin:20px 0}
+.bt{display:flex;gap:2.2rem;width:max-content;padding:10px 0;font-size:clamp(1.8rem,6vw,3.4rem);animation:mq 18s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+h2.req{font:500 clamp(1.1rem,4.5vw,2rem) var(--mono);margin:0 0 22px;color:var(--mist)}h2.req em{font-style:normal;color:var(--hot)}
+.pname{font-size:clamp(3.4rem,16vw,9rem);margin:0 0 20px}
+pre{margin:0;font:400 .9rem/1.65 var(--mono);color:var(--mist);white-space:pre-wrap}
+.k{color:var(--blue);font-weight:400}.s{color:var(--text);font-weight:400}
+.aft{display:flex;align-items:center;gap:18px;margin-top:22px;opacity:0;transform:translateY(10px);transition:.5s}
+.done .aft{opacity:1;transform:none}
+.st{font:500 .85rem var(--mono);color:var(--bg);background:var(--blue);padding:4px 10px}
+.btn{font-weight:800;font-stretch:75%;font-size:1.3rem;text-decoration:none;border-bottom:3px solid var(--hot)}.btn:hover{color:var(--hot)}
+.links a{display:block;font-size:clamp(2.4rem,11vw,5.5rem);text-decoration:none;padding:6px 0;border-bottom:1px solid #3d7bff44;transition:padding .3s,color .3s}
+.links a:hover{color:var(--hot);padding-left:18px}
+.end{font:500 .85rem var(--mono);color:var(--mist);margin-top:26px}
+html{scroll-behavior:smooth}
+section{min-height:0;padding:110px 0;scroll-margin-top:64px}
+#inicio{min-height:100vh;justify-content:center}
+main{max-width:1040px}
+#nav{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;max-width:calc(100% - 175px);display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;background:#06070dd0;border:1px solid #3d7bff55;padding:4px;font:500 .78rem var(--mono);backdrop-filter:blur(6px)}
+#nav::-webkit-scrollbar{display:none}
+#nav a{padding:5px 9px;text-decoration:none;color:var(--mist);white-space:nowrap}#nav a:hover{color:var(--hot)}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 34px}
+.b1,.b2{font-weight:800;font-stretch:75%;font-size:1.25rem;text-decoration:none;padding:12px 22px;transition:.2s}
+.b1{background:var(--blue);color:var(--bg)}.b2{border:2px solid var(--blue);color:var(--text)}
+.b1:hover{background:var(--hot)}.b2:hover{border-color:var(--hot);color:var(--hot)}
+.abt{max-width:64ch}.abt p{color:var(--mist);margin:0 0 16px}
+.abt p:first-child{color:var(--text);font-size:clamp(1.3rem,3.2vw,1.9rem);line-height:1.35;font-weight:600;font-stretch:80%}
+.grp{margin-bottom:28px}.grp h3{font:500 .85rem var(--mono);color:var(--mist);margin:0 0 10px}
+.chips,.lgd{display:flex;flex-wrap:wrap;gap:10px}.lgd{margin:-6px 0 30px}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:8px 14px 8px 8px;border:1px solid #3d7bff88;background:#3d7bff14;font-weight:600;transition:.2s}
+.chip:hover{border-color:var(--hot);transform:translateY(-2px)}.chip.nic{padding-left:14px}
+.ic{display:grid;place-items:center;min-width:30px;height:30px;padding:0 4px;background:var(--blue);color:var(--bg);font:800 .8rem var(--mono)}
+.lrn{border-style:dashed;background:none;color:var(--mist)}.lrn .ic{background:none;border:1px dashed var(--mist);color:var(--mist)}
+.lrn small{font:400 .7rem var(--mono);color:var(--hot)}
+.edu{display:grid;gap:30px}@media(min-width:800px){.edu{grid-template-columns:repeat(3,1fr)}}
+.col{border-top:2px solid var(--blue);padding-top:14px}.col h3{font:500 .85rem var(--mono);color:var(--mist);margin:0 0 12px}
+.col ul{margin:0;padding:0}.col li{list-style:none;font-size:1.15rem;font-weight:600;margin-bottom:10px}
+.col li small{display:block;font:400 .8rem var(--mono);color:var(--mist)}
+.pj{display:grid;gap:30px;align-items:start}@media(min-width:900px){.pj{grid-template-columns:1.1fr 1fr}}
+.lead2{font-size:1.25rem;font-weight:700;margin:0 0 10px}.desc{color:var(--mist);margin:0 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.tags span{font:500 .78rem var(--mono);border:1px solid #3d7bff88;padding:3px 9px}
+.feat{margin:0;padding:0;list-style:none}
+.feat li{position:relative;padding:9px 0 9px 18px;border-bottom:1px solid #3d7bff26;font-size:.95rem}
+.feat li::before{content:"";position:absolute;left:0;top:1.1em;width:7px;height:7px;background:var(--hot)}
+.mock{border:1px solid #3d7bff66;background:#0b0e1a;margin-bottom:18px}
+.project-video{width:100%;display:block;background:#000;aspect-ratio:16/9;border-radius:0}
+.yt-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.yt-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-wrap{border:1px solid #3d7bff66;background:#0b0e1a;margin-bottom:18px;overflow:hidden}
+.video-wrap .mb{display:flex;align-items:center;gap:5px;padding:8px 10px;background:#12172b;font:400 .72rem var(--mono);color:var(--mist)}
+.video-wrap .mb i{width:8px;height:8px;border-radius:50%;background:#3d7bff77}
+.video-wrap .mb span{margin-left:8px}
+.mb{display:flex;align-items:center;gap:5px;padding:8px 10px;background:#12172b;font:400 .72rem var(--mono);color:var(--mist)}
+.mb i{width:8px;height:8px;border-radius:50%;background:#3d7bff77}.mb span{margin-left:8px}
+.mbody{padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:150px}
+.mbody b{height:64px;background:linear-gradient(135deg,var(--blue),#0c1a4a)}
+.mbody i{grid-column:1/-1;height:34px;background:repeating-linear-gradient(90deg,#3d7bff 0 8px,#0000 8px 14px);opacity:.5;animation:bars 2s ease-in-out infinite alternate}
+@keyframes bars{to{opacity:.95}}
+.mbody.ex{grid-template-columns:1fr}.mbody.ex i{grid-column:auto;height:26px;background:#141b3a;border-left:4px solid var(--blue);opacity:1;animation:none}.mbody.ex i:nth-child(3n){border-color:var(--hot)}
+.acts{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px}
+.langs{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.lang{border:1px dashed #3d7bff88;padding:18px}.lang b{display:block;font-size:1.7rem;margin-bottom:8px}.lang span{font:400 .8rem var(--mono);color:var(--mist)}
+.ctitle{font-size:clamp(2.6rem,10vw,6rem);margin:0 0 32px}
+.cgrid{display:grid;gap:36px}@media(min-width:900px){.cgrid{grid-template-columns:1fr 1fr}}
+.frm{display:grid;gap:14px}.frm label{display:grid;gap:6px;font:500 .82rem var(--mono);color:var(--mist)}
+.frm input,.frm textarea{font:400 1rem var(--sans);color:var(--text);background:#0b0e1a;border:1px solid #3d7bff66;padding:12px;border-radius:0;width:100%}
+.frm input:focus,.frm textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+.frm button{font:800 1.2rem var(--sans);font-stretch:75%;background:var(--blue);color:var(--bg);border:0;padding:14px 22px;cursor:pointer;justify-self:start;transition:.2s}
+.frm button:hover{background:var(--hot)}
+.hint{font:400 .8rem var(--mono);color:var(--mist);margin:0;min-height:1.4em}
+.cl{display:block;font:500 1.05rem var(--mono);padding:12px 0;border-bottom:1px solid #3d7bff44;text-decoration:none}.cl:hover{color:var(--hot)}.cl small{display:block;color:var(--mist);font-size:.75rem}
+.cgrid .links{margin-top:14px}.cgrid .links a{font-size:clamp(2rem,5vw,3.2rem)}
+@media(prefers-reduced-motion:reduce){.glitch .l1,.glitch .l2,.scan::before,.scan::after{animation:none}}
+
+/* ===== DIFERENCIAIS ===== */
+#sysconsole{position:fixed;z-index:6;bottom:0;left:0;right:0;height:36px;max-height:28vh;background:#06070deb;border-top:1px solid #3d7bff55;font:400 .72rem/1.5 var(--mono);color:var(--mist);display:none;flex-direction:column;backdrop-filter:blur(10px);transition:height .25s}
+#sysconsole.open{display:flex}
+#sysconsole.expanded{height:140px}
+#sysconsole .sc-head{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-bottom:1px solid #3d7bff33;font-size:.7rem;color:#5d6690}
+#sysconsole .sc-head b{color:var(--blue)}
+#sysconsole .sc-body{flex:1;overflow-y:auto;padding:8px 14px;scrollbar-width:thin;scrollbar-color:#3d7bff44 transparent}
+#sysconsole .sc-line{margin-bottom:2px}
+#sysconsole .sc-line .ts{color:#5d6690;margin-right:8px}
+#sysconsole .sc-line .ok{color:#22c55e}
+#sysconsole .sc-line .info{color:var(--blue)}
+#sysconsole .sc-line .warn{color:var(--hot)}
+#sysconsole .sc-toggle{position:absolute;top:-28px;right:12px;background:#06070d;border:1px solid #3d7bff55;border-bottom:0;color:var(--mist);font:500 .7rem var(--mono);padding:5px 12px;cursor:pointer}
+#sysconsole .sc-toggle:hover{color:var(--hot)}
+
+#ai-term{position:fixed;z-index:7;bottom:160px;right:16px;width:min(340px,calc(100vw - 32px));background:#0b0e1aee;border:1px solid #3d7bff66;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px #000a;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .35s,opacity .35s;backdrop-filter:blur(12px)}
+#ai-term.open{transform:none;opacity:1;pointer-events:auto}
+#ai-term .ai-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#12172b;font:500 .75rem var(--mono);color:var(--mist)}
+#ai-term .ai-head span{color:var(--blue)}
+#ai-term .ai-close{background:none;border:0;color:var(--mist);cursor:pointer;font-size:1rem;line-height:1}
+#ai-term .ai-body{padding:12px 14px;max-height:220px;overflow-y:auto;font:400 .8rem/1.55 var(--mono)}
+#ai-term .ai-msg{margin-bottom:10px}
+#ai-term .ai-msg.user{color:var(--text)}
+#ai-term .ai-msg.bot{color:var(--mist)}
+#ai-term .ai-msg.bot b{color:var(--blue);font-weight:500}
+#ai-term .ai-input{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #3d7bff33}
+#ai-term .ai-input input{flex:1;background:#0b0e1a;border:1px solid #3d7bff55;color:var(--text);padding:8px 10px;font:400 .8rem var(--mono);border-radius:4px}
+#ai-term .ai-input input:focus{outline:none;border-color:var(--blue)}
+#ai-term .ai-input button{background:var(--blue);color:#fff;border:0;padding:0 14px;font:600 .8rem var(--mono);cursor:pointer;border-radius:4px}
+#ai-fab{position:fixed;z-index:7;bottom:24px;right:16px;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;border:0;font:700 1.1rem var(--mono);cursor:pointer;box-shadow:0 6px 24px #3d7bff66;display:none;align-items:center;justify-content:center;transition:transform .2s,background .2s}
+#ai-fab:hover{background:var(--hot);transform:scale(1.06)}
+#ai-fab.show{display:flex}
+
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:28px 0 8px}
+.metric{background:#0b0e1a;border:1px solid #3d7bff44;padding:14px 16px;border-radius:6px}
+.metric b{display:block;font:700 1.5rem var(--mono);color:var(--blue);margin-bottom:2px}
+.metric span{font:400 .72rem var(--mono);color:var(--mist)}
+.exp-block{margin-top:28px;border-top:1px solid #3d7bff44;padding-top:20px}
+.exp-block h3{font:500 .85rem var(--mono);color:var(--mist);margin:0 0 10px}
+.exp-block p{margin:0;color:var(--mist)}
+.exp-block strong{color:var(--text)}
+
+#inspect{position:fixed;inset:0;z-index:20;background:#06070df2;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+#inspect.open{display:flex}
+#inspect .insp-box{width:min(560px,100%);background:#0b0e1a;border:1px solid #3d7bff66;border-radius:10px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+#inspect .insp-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#12172b;font:500 .8rem var(--mono);color:var(--mist)}
+#inspect .insp-bar button{margin-left:auto;background:none;border:0;color:var(--mist);cursor:pointer;font-size:1.1rem}
+#inspect .insp-content{padding:20px;overflow-y:auto;font:400 .85rem/1.6 var(--mono);color:var(--mist)}
+#inspect .insp-content h3{color:var(--text);font-size:1.2rem;margin:0 0 8px}
+#inspect .insp-content .ep{margin:12px 0;padding:10px;background:#12172b;border-left:3px solid var(--blue)}
+#inspect .insp-content .ep b{color:var(--blue)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-nb" viewBox="0 0 64 48"><rect x="10" y="5" width="44" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M3 42h58l-5-7H8z" fill="currentColor"/></symbol>
+<symbol id="i-hs" viewBox="0 0 64 48"><path d="M12 30V24a20 20 0 0 1 40 0v6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><rect x="7" y="28" width="11" height="16" rx="4" fill="currentColor"/><rect x="46" y="28" width="11" height="16" rx="4" fill="currentColor"/></symbol>
+<symbol id="i-kb" viewBox="0 0 64 48"><rect x="3" y="12" width="58" height="26" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M11 20h4m6 0h4m6 0h4m6 0h4m6 0h4M11 27h4m6 0h4m6 0h4m6 0h4m6 0h4M18 33h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="i-mn" viewBox="0 0 64 48"><rect x="6" y="5" width="52" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 35v7m-10 0h20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+</svg>
+<canvas id="rain" aria-hidden="true"></canvas>
+<div id="tun"></div>
+
+<div id="facade">
+  <div class="layer l1"></div>
+  <div class="layer l2">
+    <div class="top"><b class="logo">CT</b><span class="hide-s">CSTECH 16</span><div class="srch"></div><span class="hide-s">Entrar</span><span id="cart">Carrinho 0</span></div>
+    <div class="ban"><div class="trk" id="trk">
+      <div class="sl"><span class="t hd">Tecnologia que chega rápido.</span>
+        <svg class="art" viewBox="0 0 200 130"><rect x="30" y="8" width="140" height="92" rx="8" fill="#0a0c14" stroke="#fff" stroke-width="3"/><g class="ln"><rect x="44" y="24" width="64" height="7" rx="3"/><rect x="44" y="40" width="96" height="7" rx="3"/><rect x="44" y="56" width="50" height="7" rx="3"/><rect x="44" y="72" width="80" height="7" rx="3"/></g><path d="M10 108h180l-14 14H24z" fill="#fff"/></svg></div>
+      <div class="sl"><span class="t hd">Som que impressiona.</span><div class="eq"><i></i><i></i><i></i><i></i><i></i></div>
+        <svg class="art" viewBox="0 0 200 130"><path d="M40 82V62a60 60 0 0 1 120 0v20" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/><rect x="26" y="74" width="30" height="48" rx="12" fill="#3d7bff"/><rect x="144" y="74" width="30" height="48" rx="12" fill="#3d7bff"/></svg></div>
+      <div class="sl"><span class="t hd">Monte o seu setup.</span>
+        <svg class="art" viewBox="0 0 200 90"><defs><pattern id="kk" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="16" height="16" rx="3" fill="#0a0c14"/></pattern><clipPath id="kc"><rect x="10" y="12" width="180" height="60"/></clipPath></defs><rect x="2" y="4" width="196" height="80" rx="10" fill="#cfdcff" stroke="#0a0c14" stroke-width="3"/><rect x="10" y="12" width="180" height="60" fill="url(#kk)"/><g clip-path="url(#kc)"><rect class="sw" y="12" width="40" height="60" fill="#3d7bff" opacity=".65"/></g></svg></div>
+    </div><div class="vid"><div><i></i></div><span id="tm">0:12</span></div></div>
+    <div class="tiles" aria-hidden="true">
+      <div class="tile"><div class="pic"><svg><use href="#i-nb"/></svg></div><b>Notebook gamer</b><span class="stars">★★★★★</span><span class="buy">Comprar</span></div>
+      <div class="tile"><div class="pic"><svg><use href="#i-hs"/></svg></div><b>Headset sem fio</b><span class="stars">★★★★★</span><span class="buy">Comprar</span></div>
+      <div class="tile"><div class="pic"><svg><use href="#i-kb"/></svg></div><b>Teclado mecânico</b><span class="stars">★★★★★</span><span class="buy">Comprar</span></div>
+      <div class="tile"><div class="pic"><svg><use href="#i-mn"/></svg></div><b>Monitor 27”</b><span class="stars">★★★★★</span><span class="buy">Comprar</span></div>
+    </div>
+    <div id="err" role="alert"><b>500</b>o servidor não respondeu</div>
+  </div>
+  <div class="scan"></div>
+  <div class="layer l3">
+    <div class="load"><span id="pct">Carregando loja 0%</span><div class="bar"><div id="fill"></div></div></div>
+    <button class="skip" id="skip">Pular animação</button>
+  </div>
+</div>
+
+<div id="inside">
+  <canvas id="net" aria-hidden="true"></canvas><div id="glow"></div>
+  <div id="depth"><span id="lay">gateway</span> · <b id="dm">0 m</b></div>
+  <nav id="nav" aria-label="Seções"><a href="#inicio">Início</a><a href="#sobre">Sobre</a><a href="#tecnologias">Tecnologias</a><a href="#formacao">Formação</a><a href="#projetos">Projetos</a><a href="#idiomas">Idiomas</a><a href="#contato">Contato</a></nav>
+  <main>
+    <section id="inicio" data-l="gateway">
+      <h2 class="big hd" id="hero" aria-label="Aqui embaixo é onde eu trabalho.">Aqui embaixo é onde eu trabalho.</h2>
+      <p class="sub">Paulo Victor Carneiro Tavares · Desenvolvedor Back-End</p>
+      <div class="cta"><a class="b1" href="#projetos">Ver projetos</a><a class="b2" href="#contato">Falar comigo</a></div>
+      <div class="logh" id="log"><small>recovery log · sistema restaurado após 500</small></div>
+      <div class="metrics">
+        <div class="metric"><b>4+</b><span>anos em vendas</span></div>
+        <div class="metric"><b>2</b><span>projetos em produção</span></div>
+        <div class="metric"><b>1</b><span>transição de carreira</span></div>
+        <div class="metric"><b>∞</b><span>vontade de evoluir</span></div>
+      </div>
+    </section>
+    <div class="band" aria-hidden="true"><div class="bt hd" id="bt"></div></div>
+
+    <section id="sobre" data-l="perfil">
+      <h2 class="req"><em>GET</em> /sobre</h2>
+      <div class="abt">
+        <p>Profissional em transição de carreira para tecnologia, com mais de 4 anos de experiência na área de vendas. Estudante de Análise e Desenvolvimento de Sistemas, com formação completa em Back-End pela Firjan/SENAI.</p>
+        <p>Desenvolvo projetos próprios para aplicar conhecimentos em Python, FastAPI, APIs REST, SQL e bancos de dados relacionais. Também exploro Full Stack e computação em nuvem (AWS e Azure). Perfil focado em aprendizado contínuo, resolução de problemas e evolução técnica.</p>
+        <p>Sou atencioso, dedicado e comprometido. Gosto de investigar problemas e entender não só como uma solução funciona, mas por que ela funciona. Objetivo: estágio ou vaga júnior em Back-End / Full-Stack.</p>
+      </div>
+    </section>
+
+    <section id="tecnologias" data-l="serviços">
+      <h2 class="req"><em>GET</em> /stack</h2>
+      <div class="lgd"><span class="chip nic">uso na prática</span><span class="chip nic lrn">em aprendizado</span></div>
+      <div id="tech"></div>
+    </section>
+
+    <section id="formacao" data-l="banco de dados">
+      <h2 class="req"><em>GET</em> /formacao</h2>
+      <div class="edu">
+        <div class="col"><h3>Formação acadêmica</h3><ul><li>Análise e Desenvolvimento de Sistemas<small>UNISUAM · cursando</small></li></ul></div>
+        <div class="col"><h3>Cursos concluídos</h3><ul><li>Formação Completa em Back-End<small>Firjan/SENAI</small></li><li>Pacote Office<small>Fundação Bradesco</small></li></ul></div>
+        <div class="col"><h3>Estudos complementares</h3><ul><li>Full-Stack Developer Curriculum<small>freeCodeCamp · em andamento</small></li><li>Computação em nuvem<small>AWS e Azure</small></li></ul></div>
+      </div>
+      <div class="exp-block">
+        <h3>Experiência profissional</h3>
+        <p><strong>Vendedor</strong> · +4 anos · Gestão de carteira de clientes, negociações comerciais, relacionamento, fidelização e acompanhamento de metas. Base forte em comunicação, organização e resolução de problemas — competências que levo para o desenvolvimento de software.</p>
+      </div>
+    </section>
+
+    <section id="projetos" data-l="rotas">
+      <h2 class="req"><em>GET</em> /projetos/cstech16</h2>
+      <h3 class="pname hd">CSTECH16</h3>
+      <div class="pj">
+        <div>
+          <p class="lead2">E-commerce de tecnologia</p>
+          <p class="desc">Sistema web de comércio eletrônico com autenticação de usuários e controle de permissões. Backend em Python e FastAPI integrado a MySQL; aplicação publicada no Render.</p>
+          <div class="tags"><span>Python</span><span>FastAPI</span><span>MySQL</span><span>JWT</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Render</span></div>
+          <ul class="feat"><li>Catálogo e gerenciamento de produtos</li><li>Cadastro e autenticação de usuários</li><li>Controle de acesso por perfil</li><li>Carrinho e processo de compras</li><li>Gerenciamento de pedidos</li><li>Sistema de avaliações de produtos</li><li>Dashboard administrativo</li><li>Relatórios e indicadores de vendas</li><li>API REST documentada com Swagger</li></ul>
+        </div>
+        <div>
+          <div class="video-wrap">
+            <div class="mb"><i></i><i></i><i></i><span>demo · CSTECH16</span></div>
+            <div class="yt-wrap">
+              <iframe src="https://www.youtube.com/embed/DOywvKhvEoA" title="CSTECH16 demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+          </div>
+          <div class="res"><pre data-k="0"></pre><div class="aft"><span class="st">200 ok</span></div></div>
+          <div class="acts">
+            <a class="btn" href="https://cstech16.onrender.com/" target="_blank" rel="noopener">Ver projeto online</a>
+            <a class="btn" href="https://github.com/paulovstack/CSTECH16" target="_blank" rel="noopener">Código-fonte</a>
+            <a class="btn" href="#" data-inspect="cstech16">Inspecionar API</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-l="rotas">
+      <h2 class="req"><em>GET</em> /projetos/expresslog</h2>
+      <h3 class="pname hd">ExpressLog</h3>
+      <div class="pj">
+        <div>
+          <p class="lead2">Sistema de gerenciamento de frota e viagens</p>
+          <p class="desc">Cadastro e gerenciamento de motoristas, veículos e viagens, com validações e regras de negócio. API REST com Python e FastAPI, banco MySQL. Backend no Render, banco no Aiven e front-end no GitHub Pages.</p>
+          <div class="tags"><span>Python</span><span>FastAPI</span><span>MySQL</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Render</span><span>Aiven</span></div>
+          <ul class="feat"><li>Cadastro e gerenciamento de motoristas</li><li>Cadastro e gerenciamento de veículos</li><li>Controle de viagens</li><li>Status de motoristas e veículos</li><li>Validação de dados</li><li>Integração com banco de dados</li><li>Organização de operações logísticas</li></ul>
+        </div>
+        <div>
+          <div class="mock"><div class="mb"><i></i><i></i><i></i><span>paulovstack.github.io/ExpressLog</span></div><div class="mbody ex"><i></i><i></i><i></i><i></i></div></div>
+          <div class="res"><pre data-k="1"></pre><div class="aft"><span class="st">200 ok</span></div></div>
+          <div class="acts">
+            <a class="btn" href="https://paulovstack.github.io/ExpressLog/" target="_blank" rel="noopener">Ver projeto online</a>
+            <a class="btn" href="#" data-inspect="expresslog">Inspecionar API</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="idiomas" data-l="i18n">
+      <h2 class="req"><em>GET</em> /idiomas</h2>
+      <div class="langs">
+        <div class="lang"><b class="hd">Português</b><span>Nativo</span></div>
+        <div class="lang"><b class="hd">Inglês</b><span>Intermediário</span></div>
+        <div class="lang"><b class="hd">Espanhol</b><span>Básico</span></div>
+        <div class="lang"><b class="hd">Japonês</b><span>Básico</span></div>
+        <div class="lang"><b class="hd">Russo</b><span>Básico</span></div>
+      </div>
+    </section>
+
+    <section id="contato" data-l="raiz">
+      <h2 class="req"><em>POST</em> /contato</h2>
+      <h3 class="ctitle hd">Vamos conversar?</h3>
+      <div class="cgrid">
+        <form id="frm" class="frm">
+          <label>Seu nome<input name="n" required autocomplete="name"></label>
+          <label>Seu e-mail<input name="e" type="email" required autocomplete="email"></label>
+          <label>Mensagem<textarea name="m" rows="5" required></textarea></label>
+          <button type="submit">Enviar por e-mail</button>
+          <p class="hint" id="hint"></p>
+        </form>
+        <div>
+          <a class="cl" href="mailto:paulovtavares32@gmail.com"><small>e-mail</small>paulovtavares32@gmail.com</a>
+          <a class="cl" href="tel:+5521964268664"><small>celular, ligar</small>(21) 96426-8664</a>
+          <a class="cl" href="https://wa.me/5521964268664" target="_blank" rel="noopener"><small>WhatsApp</small>Chamar no WhatsApp</a>
+          <div class="links hd">
+            <a href="https://www.linkedin.com/in/paulovtavares/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/paulovstack" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <p class="end">201 created. Sua mensagem chegou ao fundo do sistema e eu respondo.</p>
+    </section>
+  </main>
+</div>
+
+<div id="sysconsole">
+  <button class="sc-toggle" id="sc-toggle">console</button>
+  <div class="sc-head"><span>system · <b>paulo-victor</b> · recovery mode</span><span id="sc-count">0 events</span></div>
+  <div class="sc-body" id="sc-body"></div>
+</div>
+
+<button id="ai-fab" title="Perguntar ao sistema">AI</button>
+<div id="ai-term">
+  <div class="ai-head"><span>assistant · Grok + Claude + ChatGPT + Gemini</span><button class="ai-close" id="ai-close">×</button></div>
+  <div class="ai-body" id="ai-body">
+    <div class="ai-msg bot"><b>sistema:</b> Pode perguntar sobre stack, projetos, formação ou objetivo. Exemplos: “qual sua stack?”, “me fala do CSTECH16”, “por que contratar?”</div>
+  </div>
+  <div class="ai-input">
+    <input id="ai-input" placeholder="pergunte algo..." autocomplete="off">
+    <button id="ai-send">→</button>
+  </div>
+</div>
+
+<div id="inspect">
+  <div class="insp-box">
+    <div class="insp-bar">
+      <span id="insp-title">API Explorer</span>
+      <button id="insp-close">×</button>
+    </div>
+    <div class="insp-content" id="insp-content"></div>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),F=$('#facade'),I=$('#inside'),H=document.documentElement;
+const reduce=false;
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const j=o=>esc(JSON.stringify(o,null,2)).replace(/"([^"]+)":/g,'<b class="k">"$1"</b>:').replace(/: "([^"]*)"/g,': <b class="s">"$1"</b>').replace(/^(\s+)"([^"]*)"(,?)$/gm,'$1<b class="s">"$2"</b>$3');
+const D=[
+ {nome:'CSTECH16',tipo:'e-commerce de tecnologia',stack:['Python','FastAPI','MySQL','JWT'],docs:'Swagger',status:'online'},
+ {nome:'ExpressLog',tipo:'gerenciamento de frota e viagens',stack:['Python','FastAPI','MySQL'],modulos:['motoristas','veículos','viagens'],status:'online'}
+];
+$('#bt').innerHTML=Array(8).fill('<span>python</span><span>fastapi</span><span>sql</span><span>rest</span>').join('');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;io.unobserve(e.target);
+  const el=e.target,ls=j(D[el.dataset.k]).split('\n');let i=0;
+  const t=setInterval(()=>{el.innerHTML+=(i?'\n':'')+ls[i++];
+    if(i>=ls.length){clearInterval(t);el.parentElement.classList.add('done')}},reduce?0:130);
+}),{threshold:.5});
+document.querySelectorAll('pre').forEach(p=>{p.style.minHeight=(JSON.stringify(D[p.dataset.k],null,2).split('\n').length*1.65)+'em';io.observe(p)});
+
+let netOn=false,vel=0,ly=0;
+function startNet(){
+  if(netOn)return;netOn=true;
+  const c=$('#net'),x=c.getContext('2d');let W,H2,N=[],E=[],Q=[],last=0;
+  function size(){const d=devicePixelRatio||1;W=innerWidth;H2=innerHeight;c.width=W*d;c.height=H2*d;x.setTransform(d,0,0,d,0,0);
+    N=Array.from({length:W<640?20:34},()=>({x:Math.random()*W,y:Math.random()*H2}));E=[];
+    N.forEach((a,i)=>N.map((b,k)=>({k,d:Math.hypot(a.x-b.x,a.y-b.y)})).filter(o=>o.k!==i).sort((p,q)=>p.d-q.d).slice(0,2).forEach(o=>E.push([i,o.k])));}
+  function draw(t){
+    x.clearRect(0,0,W,H2);x.strokeStyle='rgba(61,123,255,.2)';
+    E.forEach(([a,b])=>{x.beginPath();x.moveTo(N[a].x,N[a].y);x.lineTo(N[b].x,N[b].y);x.stroke()});
+    x.fillStyle='rgba(61,123,255,.55)';N.forEach(n=>{x.beginPath();x.arc(n.x,n.y,2.5,0,7);x.fill()});
+    vel*=.93;
+    if(!reduce&&t-last>Math.max(90,380-vel*70)){last=t;Q.push({e:E[Math.random()*E.length|0],t:0})}
+    Q=Q.filter(q=>q.t<1);x.fillStyle='#ff4a1c';
+    Q.forEach(q=>{q.t+=.016*(1+vel);const a=N[q.e[0]],b=N[q.e[1]];x.beginPath();x.arc(a.x+(b.x-a.x)*q.t,a.y+(b.y-a.y)*q.t,3.4,0,7);x.fill()});
+    if(!reduce)requestAnimationFrame(draw);
+  }
+  size();addEventListener('resize',size);requestAnimationFrame(draw);
+}
+addEventListener('pointermove',e=>{$('#glow').style.transform=`translate(${e.clientX}px,${e.clientY}px)`});
+
+function rain(){
+  const c=$('#rain'),x=c.getContext('2d'),d=devicePixelRatio||1,W=innerWidth,Hh=innerHeight;
+  c.width=W*d;c.height=Hh*d;x.setTransform(d,0,0,d,0,0);x.font='16px monospace';
+  const cols=Math.ceil(W/16),y=Array.from({length:cols},()=>-Math.random()*Hh/16),ch='01{}[]<>/;=$#GETPOST';
+  c.classList.add('on');const t0=performance.now();
+  (function f(n){x.clearRect(0,0,W,Hh);
+    for(let i=0;i<cols;i++){for(let k=0;k<14;k++){const yy=y[i]-k;if(yy<0)continue;
+      x.fillStyle=k?`rgba(61,123,255,${(1-k/14)*.9})`:'#fff';x.fillText(ch[Math.random()*ch.length|0],i*16,yy*16)}
+      y[i]+=.55+(i%5)*.12;if(y[i]*16>Hh+240)y[i]=-Math.random()*10}
+    if(n-t0<2200)requestAnimationFrame(f);else{c.classList.remove('on');setTimeout(()=>x.clearRect(0,0,W,Hh),600)}})(t0);
+}
+
+function scr(el,txt,ms){
+  const ch='01{}/<>#$%&',t0=performance.now();
+  (function f(n){const p=Math.min(1,(n-t0)/ms),k=Math.floor(p*txt.length);
+    el.textContent=txt.slice(0,k)+[...txt.slice(k)].map(c=>c===' '?' ':ch[Math.random()*ch.length|0]).join('');
+    if(p<1)requestAnimationFrame(f)})(t0);
+}
+
+const R=['GET /trips 200','GET /drivers 200','POST /trips 201','GET /vehicles 200','GET /produtos 200','POST /pedidos 201','GET /trips/7 200','PUT /vehicles/3 200','GET /produtos/12 404'];
+let logOn=false;
+function startLog(){
+  if(logOn)return;logOn=true;const L=$('#log');
+  const add=()=>{const r=R[Math.random()*R.length|0],bad=r.endsWith('404'),ms=8+(Math.random()*40|0);
+    const d=document.createElement('div');d.innerHTML=r.replace(/^(\w+)/,'<i>$1</i>').replace(/(\d{3})$/,bad?'<em>$1</em>':'$1')+' '+ms+'ms';
+    L.appendChild(d);while(L.children.length>8)L.children[1].remove()};
+  add();if(!reduce)setInterval(add,750);
+}
+
+const secs=[...document.querySelectorAll('section')];
+function depth(){
+  const m=document.body.scrollHeight-innerHeight,p=m>0?scrollY/m:0;
+  vel=Math.min(6,vel+Math.abs(scrollY-ly)/25);ly=scrollY;
+  $('#dm').textContent=Math.round(p*180)+' m';
+  let l=secs[0];secs.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.5)l=s});
+  $('#lay').textContent=l.dataset.l;
+}
+addEventListener('scroll',depth,{passive:true});
+
+let started=false,slide=0,cart=0;
+const car=setInterval(()=>{slide=(slide+1)%3;$('#trk').style.transform=`translateX(-${slide*100}%)`;$('#cart').textContent='Carrinho '+(++cart);$('#tm').textContent='0:'+String(12+cart*3).padStart(2,'0')},1100);
+function enter(){H.classList.add('in');F.hidden=true;I.classList.add('show');I.style.opacity='1';I.style.transform='none';I.style.visibility='visible';scrollTo(0,0);depth();bootSystem()}
+function dive(){
+  if(started)return;started=true;clearInterval(car);
+  F.classList.add('glitch');
+  setTimeout(()=>{F.classList.remove('glitch');F.classList.add('diving');I.classList.add('show');$('#tun').classList.add('go');rain();
+    setTimeout(()=>{startNet();startLog();scr($('#hero'),'Aqui embaixo é onde eu trabalho.',1500)},1900);
+    setTimeout(enter,1900);
+    setTimeout(()=>{I.classList.add('show');I.style.opacity='1';I.style.visibility='visible';F.hidden=true;H.classList.add('in')},2600)},1000);
+}
+function skip(){if(started&&H.classList.contains('in'))return;started=true;clearInterval(car);I.classList.add('show','instant');startNet();startLog();enter()}
+$('#skip').onclick=skip;
+if(reduce){skip()}else{
+  let v=0;const iv=setInterval(()=>{
+    v=Math.min(100,v+Math.random()*4+2.5);
+    $('#fill').style.width=v+'%';$('#pct').textContent='Carregando loja '+Math.floor(v)+'%';
+    if(v>=100){clearInterval(iv);setTimeout(dive,350)}
+  },120);
+}
+
+const T=[
+{g:'Linguagens de programação',i:[['Python','Py'],['C#','C#'],['JavaScript','JS'],['SQL','SQL']]},
+{g:'Back-end',i:[['FastAPI','FA'],['APIs REST'],['POO'],['Autenticação e autorização'],['Integração entre sistemas']]},
+{g:'Banco de dados',i:[['MySQL','My'],['Modelagem e manipulação de dados'],['Consultas SQL']]},
+{g:'Front-end',i:[['HTML5','H5'],['CSS3','C3'],['JavaScript','JS']]},
+{g:'Ferramentas e tecnologias',i:[['Git','Git'],['GitHub','GH'],['Swagger / OpenAPI','{}'],['Render','Rn'],['AWS','aws',1],['Microsoft Azure','Az',1]]},
+{g:'Ferramentas de IA',i:[['Grok'],['ChatGPT'],['Claude'],['Gemini']]}
+];
+$('#tech').innerHTML=T.map(g=>`<div class="grp"><h3>${g.g}</h3><div class="chips">${g.i.map(([n,c,l])=>`<span class="chip${l?' lrn':''}${c?'':' nic'}">${c?`<b class="ic">${c}</b>`:''}${n}${l?' <small>em aprendizado</small>':''}</span>`).join('')}</div></div>`).join('');
+
+$('#frm').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),a=document.createElement('a');
+  a.href='mailto:paulovtavares32@gmail.com?subject='+encodeURIComponent('Contato pelo portfólio: '+f.get('n'))+'&body='+encodeURIComponent(f.get('m')+'\n\nDe: '+f.get('n')+' ('+f.get('e')+')');
+  a.click();$('#hint').textContent='Abrindo seu app de e-mail. Se não abrir, escreva para paulovtavares32@gmail.com.';
+  sysLog('POST /contato 201','ok');
+};
+
+const scBody=$('#sc-body'),scCount=$('#sc-count');
+let eventCount=0;
+function sysLog(msg,type='info'){
+  eventCount++;
+  scCount.textContent=eventCount+' events';
+  const ts=new Date().toLocaleTimeString('pt-BR',{hour12:false});
+  const line=document.createElement('div');
+  line.className='sc-line';
+  line.innerHTML=`<span class="ts">${ts}</span><span class="${type}">${msg}</span>`;
+  scBody.appendChild(line);
+  scBody.scrollTop=scBody.scrollHeight;
+  while(scBody.children.length>40)scBody.firstChild.remove();
+}
+function bootSystem(){
+  $('#sysconsole').classList.add('open');
+  $('#ai-fab').classList.add('show');
+  sysLog('system recovery initiated after 500','warn');
+  setTimeout(()=>sysLog('kernel modules loaded · python · fastapi · mysql','ok'),300);
+  setTimeout(()=>sysLog('network mesh online · listening on :443','ok'),600);
+  setTimeout(()=>sysLog('GET /profile 200 · Paulo Victor Carneiro Tavares','ok'),1000);
+  setTimeout(()=>sysLog('career transition detected · sales → backend','info'),1400);
+  setTimeout(()=>sysLog('all systems nominal · ready for inspection','ok'),1800);
+}
+
+$('#sc-toggle').onclick=()=>{
+  const c=$('#sysconsole');
+  c.classList.toggle('expanded');
+};
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',()=>sysLog('NAV '+a.getAttribute('href')+' · client request','info'));
+});
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('mouseenter',()=>sysLog('INSPECT skill:'+c.textContent.trim().slice(0,20),'info'));
+});
+
+const aiTerm=$('#ai-term'),aiBody=$('#ai-body'),aiInput=$('#ai-input');
+$('#ai-fab').onclick=()=>{aiTerm.classList.add('open');aiInput.focus();sysLog('AI assistant session opened','ok')};
+$('#ai-close').onclick=()=>aiTerm.classList.remove('open');
+
+const knowledge={
+  stack:'Stack principal: Python, FastAPI, MySQL, APIs REST, JWT, Git/GitHub. Front: HTML, CSS, JS. Em aprendizado: AWS, Azure e Full Stack. Uso Grok, ChatGPT, Claude e Gemini como ferramentas de apoio no dia a dia.',
+  projetos:'Dois projetos em produção: CSTECH16 (e-commerce completo com autenticação, carrinho, dashboard e Swagger) e ExpressLog (gestão de frota e viagens com FastAPI + MySQL). Ambos no ar.',
+  cstech16:'CSTECH16 é um e-commerce de tecnologia. Backend Python/FastAPI + MySQL, autenticação JWT, controle de perfil, carrinho, pedidos, avaliações e painel admin. Publicado no Render. Código no GitHub.',
+  expresslog:'ExpressLog gerencia motoristas, veículos e viagens. API REST com validações e regras de negócio. Backend no Render, banco no Aiven, front no GitHub Pages.',
+  formacao:'Cursando Análise e Desenvolvimento de Sistemas (UNISUAM). Formação completa em Back-End pela Firjan/SENAI. Full-Stack Curriculum no freeCodeCamp em andamento. Pacote Office pela Fundação Bradesco.',
+  objetivo:'Busco estágio ou vaga júnior em Back-End ou Full-Stack. Quero contribuir com equipes, aprender rápido e entregar valor real.',
+  experiencia:'Mais de 4 anos em vendas: gestão de carteira, negociação, relacionamento e metas. Levo comunicação, organização e resolução de problemas para o código.',
+  porquec:'Porque combino experiência real de mercado (vendas) com base técnica sólida e projetos próprios em produção. Aprendo rápido, investigo problemas a fundo e uso IA de forma produtiva. Estou pronto para contribuir desde o primeiro dia.',
+  ia:'Uso Grok, ChatGPT, Claude e Gemini diariamente para pesquisa, desenvolvimento, análise e depuração de código. IA é ferramenta, não substituto do raciocínio.',
+  contato:'E-mail: paulovtavares32@gmail.com · WhatsApp: (21) 96426-8664 · LinkedIn e GitHub nos links do portfólio.',
+  default:'Posso falar sobre stack, projetos (CSTECH16 e ExpressLog), formação, experiência em vendas, objetivo ou por que me contratar. É só perguntar.'
+};
+
+function aiReply(q){
+  const t=q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if(/stack|tecnolog|linguag|ferrament/.test(t))return knowledge.stack;
+  if(/cstech|ecommerce|e-commerce|loja/.test(t))return knowledge.cstech16;
+  if(/express|logistica|frota|viagem/.test(t))return knowledge.expresslog;
+  if(/projeto/.test(t))return knowledge.projetos;
+  if(/forma|curso|facul|estud/.test(t))return knowledge.formacao;
+  if(/objetivo|vaga|estagio|estágio|busca|procura/.test(t))return knowledge.objetivo;
+  if(/experiencia|experiência|venda|vendedor/.test(t))return knowledge.experiencia;
+  if(/por ?que|contratar|escolher|diferencial/.test(t))return knowledge.porquec;
+  if(/ia|ai|grok|chatgpt|claude|gemini|inteligencia/.test(t))return knowledge.ia;
+  if(/contato|email|e-mail|whats|telefone|falar/.test(t))return knowledge.contato;
+  return knowledge.default;
+}
+
+function sendAI(){
+  const q=aiInput.value.trim();
+  if(!q)return;
+  const user=document.createElement('div');user.className='ai-msg user';user.textContent='você: '+q;aiBody.appendChild(user);
+  aiInput.value='';
+  sysLog('AI query · "'+q.slice(0,40)+'"','info');
+  setTimeout(()=>{
+    const bot=document.createElement('div');bot.className='ai-msg bot';
+    bot.innerHTML='<b>sistema:</b> '+aiReply(q);
+    aiBody.appendChild(bot);
+    aiBody.scrollTop=aiBody.scrollHeight;
+  },400+Math.random()*500);
+}
+$('#ai-send').onclick=sendAI;
+aiInput.addEventListener('keydown',e=>{if(e.key==='Enter')sendAI()});
+
+const inspectData={
+  cstech16:'<h3>CSTECH16 · API Overview</h3><p>Base URL: https://cstech16.onrender.com</p><div class="ep"><b>POST</b> /auth/login — autenticação JWT</div><div class="ep"><b>GET</b> /produtos — listagem com filtros</div><div class="ep"><b>POST</b> /produtos — criar (admin)</div><div class="ep"><b>GET</b> /carrinho — itens do usuário</div><div class="ep"><b>POST</b> /pedidos — finalizar compra</div><div class="ep"><b>GET</b> /admin/dashboard — métricas de vendas</div><div class="ep"><b>GET</b> /docs — Swagger UI</div><p style="margin-top:16px">Stack: Python · FastAPI · MySQL · JWT · Render</p>',
+  expresslog:'<h3>ExpressLog · API Overview</h3><p>Sistema de gestão logística</p><div class="ep"><b>GET</b> /drivers — listar motoristas</div><div class="ep"><b>POST</b> /drivers — cadastrar motorista</div><div class="ep"><b>GET</b> /vehicles — listar veículos</div><div class="ep"><b>POST</b> /vehicles — cadastrar veículo</div><div class="ep"><b>GET</b> /trips — listar viagens</div><div class="ep"><b>POST</b> /trips — criar viagem</div><div class="ep"><b>PUT</b> /trips/{id}/status — atualizar status</div><p style="margin-top:16px">Stack: Python · FastAPI · MySQL · Render · Aiven</p>'
+};
+document.querySelectorAll('[data-inspect]').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.preventDefault();
+    const key=btn.dataset.inspect;
+    $('#insp-title').textContent=key.toUpperCase()+' · API Explorer';
+    $('#insp-content').innerHTML=inspectData[key]||'';
+    $('#inspect').classList.add('open');
+    sysLog('INSPECT '+key+' · API explorer opened','ok');
+  });
+});
+$('#insp-close').onclick=()=>$('#inspect').classList.remove('open');
+$('#inspect').addEventListener('click',e=>{if(e.target.id==='inspect')$('#inspect').classList.remove('open')});
+</script>
+</body>
+</html>

@@ -271,10 +271,10 @@ main{max-width:1040px}
     <section id="inicio" data-l="gateway">
       <h2 class="big hd" id="hero" aria-label="Aqui embaixo é onde eu trabalho.">Aqui embaixo é onde eu trabalho.</h2>
       <p class="sub">Paulo Victor Carneiro Tavares · Desenvolvedor Back-End</p>
-      <div class="cta"><a class="b1" href="#projetos">Ver projetos</a><a class="b2" href="#contato">Falar comigo</a></div>
+      <div class="cta"><a class="b1" href="#projetos">Ver projetos</a><a class="b2" href="#contato">Falar comigo</a><a class="b2" href="curriculo.pdf" download="Paulo_Victor_Curriculo.pdf">Baixar currículo</a></div>
       <div class="logh" id="log"><small>recovery log · sistema restaurado após 500</small></div>
       <div class="metrics">
-        <div class="metric"><b>4+</b><span>anos em vendas</span></div>
+        <div class="metric"><b>1+</b><span>anos de stack</span></div>
         <div class="metric"><b>2</b><span>projetos em produção</span></div>
         <div class="metric"><b>1</b><span>transição de carreira</span></div>
         <div class="metric"><b>∞</b><span>vontade de evoluir</span></div>
@@ -509,7 +509,7 @@ function dive(){
   if(started)return;started=true;clearInterval(car);
   F.classList.add('glitch');
   setTimeout(()=>{F.classList.remove('glitch');F.classList.add('diving');I.classList.add('show');$('#tun').classList.add('go');rain();
-    setTimeout(()=>{startNet();startLog();scr($('#hero'),'Aqui embaixo é onde eu trabalho.',1500)},1900);
+    setTimeout(()=>{startNet();startLog()},1900);
     setTimeout(enter,1900);
     setTimeout(()=>{I.classList.add('show');I.style.opacity='1';I.style.visibility='visible';F.hidden=true;H.classList.add('in')},2600)},1000);
 }
